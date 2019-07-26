@@ -1,0 +1,110 @@
+<html>
+    <head>
+      <meta charset="utf-8">
+      <title>P6</title>
+      <meta name="description" content="360&deg; Image Gallery - A-Frame">
+      <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+      <script src="https://unpkg.com/aframe-event-set-component@5/dist/aframe-event-set-component.min.js"></script>
+      <script src="https://unpkg.com/aframe-layout-component@5.3.0/dist/aframe-layout-component.min.js"></script>
+      <script src="https://unpkg.com/aframe-template-component@3.2.1/dist/aframe-template-component.min.js"></script>
+      <script src="https://unpkg.com/aframe-proxy-event-component@2.1.0/dist/aframe-proxy-event-component.min.js"></script>
+    </head>
+    <body>
+      <a-scene  fog="type: linear; color: #AA0000">
+        <a-assets>
+                <img id="background" crossorigin="anonymous" src="/Image/designbig.jpg">
+                <img id="logo" crossorigin="anonymous" src="/Image/vedomatrix img/VedoMatrixIT_Full_Logo_600.png">
+                <img id="it" crossorigin="anonymous" src="/Image/vedomatrix img/Home-IT-Services.jpg">
+                <img id="back" crossorigin="anonymous" src="/Image/background img.jpg">
+                <img id="updateback" crossorigin="anonymous" src="/Image/4.jpg">
+                <img id="firstbox" crossorigin="anonymous" src="/Image/imagBanner3.jpg">
+                <img id="secondbox" crossorigin="anonymous" src="/Image/vedomatrix img/vedobk1.jpg">
+                <img id="search-icon" crossorigin="anonymous" src="/Image/search-icon.png">
+                <audio id="click-sound" crossorigin="anonymous" src="https://cdn.aframe.io/360-image-gallery-boilerplate/audio/click.ogg"></audio>
+                <a-mixin id="image" geometry="height: 2; width: 2"></a-mixin>
+                <a-mixin id="toggleAnimation" animation="property: visible; from: false; to: true; dur: 1" visible="false"></a-mixin>
+
+                 <!-- Image link template to be reused. -->
+                 <script id="link" type="text/html">
+                  <a-entity class="link"
+                            geometry="primitive: plane; height: 1; width: 3"
+                            material="shader: flat; src: ${thumb}"
+                            event-set__mouseenter="scale: 1.2 1.2 1"
+                            event-set__mouseleave="scale: 1 1 1"
+                            event-set__click="_target: #image-360; _delay: 300; material.src: ${src}"
+                            proxy-event="event: click; to: #image-360; as: fade"
+                            sound="on: click; src: #click-sound"></a-entity>
+                    </script>
+        </a-assets>
+
+         <!-- 360-degree image. -->
+         <a-sky id="image-360" radius="10" src="#background" shadow="receive: true" 
+                animation__fade="property: components.material.material.color; type: color; from: #FFF; to: #000; dur: 300; startEvents: fade"
+                animation__fadeback="property: components.material.material.color; type: color; from: #000; to: #FFF; dur: 300; startEvents: animationcomplete__fade"></a-sky>
+        
+        <!-- Vedomatrix Logo -->
+         <a-image src="#logo"
+                  position="0 3.5 -3"
+                  scale="2 0.5 1"></a-image>
+
+        <a-plane src="#secondbox"
+                position="1.4 1 -3"
+                opacity="0.6">
+        </a-plane>
+
+        <a-plane src="#firstbox"
+                position="1.4 2.1 -3"
+               >
+        </a-plane>
+
+        <!--middle plane| About -->
+        <a-entity text="value: About us.
+                         We are a Technology Services Firm which is built around the philosophy of Solutionism. We offer products and services in Information Technology, Talent Management and Media Services.Innovation is in our DNA. We embrace Creativity and New Challenges.Our guiding principle is “Customer Satisfaction through Superior Delivery”.We are designed to move fast, always making sure to deliver a quality product quickly.; 
+                        width: 4; color:#333333" position="-1.7 1.55 -3"
+        ></a-entity>
+        <a-plane src="#back"
+                 position="-1.5 1.55 -3"
+                 width="4.5"
+                 height="2.1"
+                 opacity="0.6">
+        </a-plane> 
+
+         <!--Right plane| Latest Updates -->
+        <a-entity text="value: UPDATES; width: 4; color:#FFFFFF" position="5 2.5 -3" shader="flat"></a-entity>  
+        <a-plane src="#updateback"
+                position="3.5 1.55 -3"
+                width="1.7"
+                height="2.1"
+                opacity="0.6">
+        </a-plane>
+
+        <a-image src="#search-icon" position="4.2 3.5 -3" scale="0.3 0.3 0.3"></a-image>
+
+        <a-entity text="value: HOME; width: 4; color:#00AA00" position="-3.5 2.4 -3" shader="flat" opacity="0.6"></a-entity> 
+        <a-entity text="value: IT-SERVICES; width: 4; color:#0000AA" position="-3.5 2 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: TALENT-SERVICES; width: 4; color:#0000AA" position="-3.5 1.6 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: MEDIA-SERVICES; width: 4; color:#0000AA" position="-3.5 1.2 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: CAREERS; width: 4; color:#0000AA" position="-3.5 0.8 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: CONTACT; width: 4; color:#0000AA" position="-3.5 0.4 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: ABOUT; width: 4; color:#0000AA" position="-3.5 0 -3" shader="flat" opacity="0.6"></a-entity>
+        <a-entity text="value: We have the Startup Attitude!; width: 5; color:#AA0000" position="-1.2 2.9 -3"></a-entity>
+        <a-entity text="value: HOME; width: 4; color:#333333" position="0 0 -3"></a-entity>
+
+        <!-- Camera + cursor. -->
+        <a-entity id="camera" camera look-controls>
+                <a-cursor id="cursor"
+                          animation__click="property: scale; startEvents: click; from: 2.1 2.1 2.1; to: 2 2 2; dur: 150"
+                          animation__fusing="property: fusing; startEvents: fusing; from: 2 2 2; to: 2.1 2.1 2.1; dur: 1500"
+                          event-set__mouseenter="_event: mouseenter; color: springgreen"
+                          event-set__mouseleave="_event: mouseleave; color: black"
+                          raycaster="objects: .link">
+                </a-cursor>
+        </a-entity>
+
+       </a-scene>
+    </body>
+</html>
+        
+
+
+        
